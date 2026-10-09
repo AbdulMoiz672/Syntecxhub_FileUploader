@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171a18">
+    <title>FIELDNOTE | Private file desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="auth-screen" id="auth-screen" aria-labelledby="auth-title">
+      <section class="auth-intro" aria-label="FIELDNOTE private archive">
+        <a class="auth-wordmark" href="#auth-title" aria-label="FIELDNOTE">FIELDNOTE<span>.</span></a>
+        <div class="auth-intro-copy">
+          <p class="eyebrow"><span class="eyebrow-rule"></span>PRIVATE FILE DESK</p>
+          <h1>Keep your work<br>within reach<span class="title-period">.</span></h1>
+          <p class="auth-intro-caption">A quiet place for the files you need, available only to your account.</p>
+        </div>
+        <div class="auth-footnote"><span class="rail-dot" aria-hidden="true"></span><span>YOUR ARCHIVE<br>AWAITS</span></div>
+      </section>
+
+      <section class="auth-panel" aria-label="Account access">
+        <div class="auth-loading" id="auth-loading" role="status" aria-live="polite">
+          <span class="auth-loader" aria-hidden="true"></span>
+          <p>Checking your session…</p>
+        </div>
+        <div class="auth-form-panel" id="auth-form-panel" hidden>
+          <p class="eyebrow">ACCOUNT ACCESS</p>
+          <h2 id="auth-title">Sign in to your archive</h2>
+          <p class="auth-description" id="auth-description">Your files are waiting where you left them.</p>
+          <div class="auth-mode-switch" role="group" aria-label="Account access mode">
+            <button class="auth-mode-button is-active" type="button" data-auth-mode="login" aria-pressed="true">Sign in</button>
+            <button class="auth-mode-button" type="button" data-auth-mode="register" aria-pressed="false">Create account</button>
+          </div>
+          <p class="auth-error" id="auth-error" role="alert" hidden></p>
+          <form class="auth-form" id="login-form" novalidate>
+            <label class="auth-field" for="login-email">
+              <span>Email address</span>
+              <input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </label>
+            <label class="auth-field" for="login-password">
+              <span>Password</span>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+            </label>
+            <button class="auth-submit" type="submit"><span>Sign in</span><span aria-hidden="true">↗</span></button>
+          </form>
+          <form class="auth-form" id="register-form" hidden novalidate>
+            <label class="auth-field" for="register-email">
+              <span>Email address</span>
+              <input id="register-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </label>
+            <label class="auth-field" for="register-password">
+              <span>Password <span class="field-hint">12–128 characters</span></span>
+              <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+            </label>
+            <label class="auth-field" for="register-confirm-password">
+              <span>Confirm password</span>
+              <input id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+            </label>
+            <button class="auth-submit" type="submit"><span>Create account</span><span aria-hidden="true">↗</span></button>
+          </form>
+          <p class="auth-privacy">Private by account. Your session stays in a secure, HttpOnly cookie.</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="app-shell" id="app-shell" hidden>
+      <a class="skip-link" href="#main">Skip to files</a>
+      <aside class="rail" aria-label="Main navigation">
+        <a class="wordmark" href="#main" aria-label="FIELDNOTE home">F<span>.</span></a>
+        <nav class="rail-nav" aria-label="Workspace">
+          <a class="rail-link is-current" href="#files" aria-current="page" aria-label="Files" title="Files">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h6l2 2h7v11h-15z"/><path d="M4.5 9h15"/></svg>
+          </a>
+        </nav>
+        <div class="rail-bottom"><span class="rail-dot" aria-hidden="true"></span><span>LOCAL<br>WORKSPACE</span></div>
+      </aside>
+
+      <main class="workspace" id="main">
+        <header class="topbar">
+          <a class="mobile-wordmark" href="#main">FIELDNOTE<span>.</span></a>
+          <div class="connection-state"><span class="connection-dot" aria-hidden="true"></span><span>Private workspace</span></div>
+          <div class="account-controls">
+            <span class="account-email" id="account-email"></span>
+            <button class="sign-out-button" id="sign-out" type="button">Sign out</button>
+          </div>
+          <button class="icon-button refresh-button" id="refresh-button" type="button" aria-label="Refresh file list" title="Refresh file list">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 1-2-4.9L20 12"/></svg>
+          </button>
+        </header>
+
+        <div class="content-wrap">
+          <section class="page-heading" aria-labelledby="page-title">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-rule"></span>YOUR WORKSPACE</p>
+              <h1 id="page-title">Your files<span class="title-period">.</span></h1>
+              <p class="heading-caption"><span id="file-count">Loading files</span><span class="caption-divider">/</span>Stored securely in your library</p>
+            </div>
+            <button class="upload-action" id="choose-file" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v5h14v-5"/></svg>
+              <span>Upload files</span>
+            </button>
+          </section>
+
+          <section class="upload-zone" id="drop-zone" aria-labelledby="upload-zone-title" aria-describedby="accepted-types max-file-size">
+            <input id="file-input" type="file" hidden>
+            <div class="upload-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v5h14v-5"/></svg>
+            </div>
+            <div class="upload-copy">
+              <p class="upload-title" id="upload-zone-title">Drop a file to add it to your desk</p>
+              <p class="upload-subtitle">or <button class="text-button" id="browse-files" type="button">browse your device</button></p>
+            </div>
+            <div class="upload-constraints">
+              <span id="accepted-types">Checking accepted formats</span>
+              <span class="constraint-separator" aria-hidden="true">·</span>
+              <span>Up to <strong id="max-file-size">—</strong></span>
+            </div>
+            <div class="upload-progress" id="upload-progress" hidden>
+              <div class="progress-label"><span id="progress-filename">Uploading file</span><span id="progress-percent">0%</span></div>
+              <progress id="progress-bar" max="100" value="0" aria-labelledby="progress-filename progress-percent">0%</progress>
+              <span class="visually-hidden" id="progress-announcement" aria-live="polite" aria-atomic="true"></span>
+            </div>
+          </section>
+
+          <div class="notice" id="notice" role="status" aria-live="polite" hidden>
+            <span class="notice-mark" aria-hidden="true"></span>
+            <p id="notice-text"></p>
+            <button class="text-button retry-upload" id="retry-upload" type="button" hidden>Retry upload</button>
+          </div>
+
+          <section class="file-workspace" id="files" aria-label="Files and selected file details">
+            <div class="file-list-panel">
+              <div class="list-heading">
+                <div>
+                  <p class="eyebrow">LIBRARY</p>
+                  <h2>Recent files</h2>
+                </div>
+                <label class="search-field">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.4"/><path d="m16 16 4 4"/></svg>
+                  <span class="visually-hidden">Search files</span>
+                  <input id="search-input" type="search" placeholder="Search files" autocomplete="off">
+                  <kbd>/</kbd>
+                </label>
+              </div>
+
+              <div class="list-columns" aria-hidden="true">
+                <span>Name</span><span>Size</span><span>Added</span><span></span>
+              </div>
+              <p class="state-message" id="loading-state">Gathering your files…</p>
+              <div class="state-message error-state" id="api-error-state" hidden>
+                <p>We couldn’t reach your file library.</p>
+                <button class="text-button" id="retry-list-button" type="button">Try again</button>
+              </div>
+              <div class="state-message empty-state" id="empty-state" hidden>
+                <span class="empty-symbol" aria-hidden="true">+</span>
+                <p>Your desk is clear.</p>
+                <span>Upload your first file to start a library.</span>
+              </div>
+              <p class="state-message" id="no-results-state" hidden>No files match that search.</p>
+              <ul class="file-list" id="file-list" aria-label="Recent files"></ul>
+            </div>
+
+            <aside class="detail-panel" id="detail-panel" aria-labelledby="detail-heading" aria-live="polite">
+              <div class="detail-heading">
+                <div>
+                  <p class="eyebrow">SELECTED FILE</p>
+                  <h2 id="detail-heading">File details</h2>
+                </div>
+                <span class="detail-index" id="detail-index">—</span>
+              </div>
+              <div class="detail-empty" id="detail-empty">
+                <span class="detail-empty-rule" aria-hidden="true"></span>
+                <p>Select a file<br>to see it here.</p>
+              </div>
+              <div id="file-detail" hidden></div>
+            </aside>
+          </section>
+          <footer class="page-footer"><span>FIELDNOTE FILE DESK</span><span id="storage-status">READY WHEN YOU ARE</span></footer>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
